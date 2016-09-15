@@ -18,6 +18,29 @@ USE `cir`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `anuncio`
+--
+
+DROP TABLE IF EXISTS `anuncio`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `anuncio` (
+  `Anuncio_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Usuario_id` int(11) NOT NULL,
+  `Data` date NOT NULL,
+  `Descricao` varchar(255) NOT NULL,
+  `Tipo_Categoria` int(11) NOT NULL,
+  `Imagem` mediumtext NOT NULL,
+  `Categoria_Produto_id` int(11) NOT NULL,
+  PRIMARY KEY (`Anuncio_id`),
+  KEY `anuncio_usuario_idx` (`Usuario_id`),
+  KEY `catprod_idx` (`Categoria_Produto_id`),
+  CONSTRAINT `catprod` FOREIGN KEY (`Categoria_Produto_id`) REFERENCES `categoria` (`Categoria_Produto_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `usr_anuncio` FOREIGN KEY (`Usuario_id`) REFERENCES `usuarios` (`Usuario_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `anuncio`
 --
 
@@ -26,6 +49,23 @@ LOCK TABLES `anuncio` WRITE;
 INSERT INTO `anuncio` VALUES (2,2,'2016-05-02','Conjunto de garrafas Pet',2,'http://www.cir.com.br/img/anuncio1.jpg',2),(3,2,'2016-05-02','Fardo de embalagens plásticas',2,'http://www.cir.com.br/img/anuncio2.jpg',2);
 /*!40000 ALTER TABLE `anuncio` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `categoria`
+--
+
+DROP TABLE IF EXISTS `categoria`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `categoria` (
+  `Categoria_Produto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Tipo_Categoria_id` int(11) NOT NULL,
+  `Descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`Categoria_Produto_id`),
+  KEY `Tipo_Produto_idx` (`Tipo_Categoria_id`),
+  CONSTRAINT `Tipo_Produto` FOREIGN KEY (`Tipo_Categoria_id`) REFERENCES `categoria_tipo` (`Tipo_Categoria_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `categoria`
@@ -38,6 +78,20 @@ INSERT INTO `categoria` VALUES (1,1,'Papelão'),(2,2,'Garrafa Pet'),(3,2,'Embala
 UNLOCK TABLES;
 
 --
+-- Table structure for table `categoria_tipo`
+--
+
+DROP TABLE IF EXISTS `categoria_tipo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `categoria_tipo` (
+  `Tipo_Categoria_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Descricao` varchar(45) NOT NULL,
+  PRIMARY KEY (`Tipo_Categoria_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `categoria_tipo`
 --
 
@@ -46,6 +100,25 @@ LOCK TABLES `categoria_tipo` WRITE;
 INSERT INTO `categoria_tipo` VALUES (1,'Papel'),(2,'Plastico');
 /*!40000 ALTER TABLE `categoria_tipo` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `chat_detalhe`
+--
+
+DROP TABLE IF EXISTS `chat_detalhe`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `chat_detalhe` (
+  `Chat_Detalhe_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Chat_Master_id` int(11) NOT NULL,
+  `Data` datetime NOT NULL,
+  `Chat_Anunciante` text NOT NULL,
+  `Chat_Usuario` varchar(45) NOT NULL,
+  PRIMARY KEY (`Chat_Detalhe_id`),
+  KEY `master_id_idx` (`Chat_Master_id`),
+  CONSTRAINT `master_id` FOREIGN KEY (`Chat_Master_id`) REFERENCES `chat_master` (`Chat_Master_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `chat_detalhe`
@@ -58,6 +131,28 @@ INSERT INTO `chat_detalhe` VALUES (5,1,'2016-05-03 10:02:00','','Bom dia, estou 
 UNLOCK TABLES;
 
 --
+-- Table structure for table `chat_master`
+--
+
+DROP TABLE IF EXISTS `chat_master`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `chat_master` (
+  `Chat_Master_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Usuario_id_Anuncio` int(11) NOT NULL,
+  `Anuncio_id` int(11) NOT NULL,
+  `Usuario_Chat` int(11) NOT NULL,
+  PRIMARY KEY (`Chat_Master_id`),
+  KEY `anuncio_idx` (`Anuncio_id`),
+  KEY `usuario_chat_idx` (`Usuario_id_Anuncio`,`Usuario_Chat`),
+  KEY `usr_chat2_idx` (`Usuario_Chat`),
+  CONSTRAINT `anuncio_chat` FOREIGN KEY (`Anuncio_id`) REFERENCES `anuncio` (`Anuncio_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `usr_chat` FOREIGN KEY (`Usuario_id_Anuncio`) REFERENCES `usuarios` (`Usuario_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `usr_chat2` FOREIGN KEY (`Usuario_Chat`) REFERENCES `usuarios` (`Usuario_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `chat_master`
 --
 
@@ -66,6 +161,21 @@ LOCK TABLES `chat_master` WRITE;
 INSERT INTO `chat_master` VALUES (1,2,2,3);
 /*!40000 ALTER TABLE `chat_master` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `cidades`
+--
+
+DROP TABLE IF EXISTS `cidades`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cidades` (
+  `Cidade_id` int(11) NOT NULL AUTO_INCREMENT,
+  `UF` varchar(2) NOT NULL,
+  `Cidade` varchar(100) NOT NULL,
+  PRIMARY KEY (`Cidade_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `cidades`
@@ -78,6 +188,27 @@ INSERT INTO `cidades` VALUES (1,'PB','Campina grande');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `denuncias`
+--
+
+DROP TABLE IF EXISTS `denuncias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `denuncias` (
+  `Denuncia_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Anuncio_id` int(11) NOT NULL,
+  `Descricao` mediumtext NOT NULL,
+  `Data` date NOT NULL,
+  `Usuario_id` int(11) NOT NULL,
+  PRIMARY KEY (`Denuncia_id`),
+  KEY `usuario_idx` (`Usuario_id`),
+  KEY `anunciodenuncia_idx` (`Anuncio_id`),
+  CONSTRAINT `anunciodenuncia` FOREIGN KEY (`Anuncio_id`) REFERENCES `anuncio` (`Anuncio_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `usrdenuncia` FOREIGN KEY (`Usuario_id`) REFERENCES `usuarios` (`Usuario_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `denuncias`
 --
 
@@ -88,6 +219,25 @@ INSERT INTO `denuncias` VALUES (1,2,'Anuncio falso. O usuário não possui o mat
 UNLOCK TABLES;
 
 --
+-- Table structure for table `favoritos`
+--
+
+DROP TABLE IF EXISTS `favoritos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `favoritos` (
+  `Favorito_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Anuncio_id` int(11) NOT NULL,
+  `Usuario_id` int(11) NOT NULL,
+  PRIMARY KEY (`Favorito_id`),
+  KEY `anuncio_idx` (`Anuncio_id`),
+  KEY `usuario_idx` (`Usuario_id`),
+  CONSTRAINT `anuncio` FOREIGN KEY (`Anuncio_id`) REFERENCES `anuncio` (`Anuncio_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `usr_fav` FOREIGN KEY (`Usuario_id`) REFERENCES `usuarios` (`Usuario_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `favoritos`
 --
 
@@ -96,6 +246,27 @@ LOCK TABLES `favoritos` WRITE;
 INSERT INTO `favoritos` VALUES (2,2,3);
 /*!40000 ALTER TABLE `favoritos` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuarios` (
+  `Usuario_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Nome` varchar(45) NOT NULL,
+  `CPF_CNPJ` varchar(15) NOT NULL,
+  `Cidade_id` int(11) NOT NULL,
+  `Data_Cadastro` date NOT NULL,
+  `Email` varchar(45) NOT NULL,
+  `Senha` varchar(16) NOT NULL,
+  PRIMARY KEY (`Usuario_id`),
+  KEY `Cidade_idx` (`Cidade_id`),
+  CONSTRAINT `Cidade` FOREIGN KEY (`Cidade_id`) REFERENCES `cidades` (`Cidade_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `usuarios`
@@ -124,4 +295,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-14 14:33:00
+-- Dump completed on 2016-09-15 13:53:01
