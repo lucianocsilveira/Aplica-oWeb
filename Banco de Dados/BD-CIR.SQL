@@ -103,7 +103,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (2,'Luciano SIlveira','02445985412',1,'2016-05-01','',''),(3,'Diego Brow','84765367467',1,'2016-05-01','',''),(4,'Alusca Tchuca','94876374654',1,'2016-05-01','',''),(5,'Diego Miguel','0000022222',1,'2016-09-13','','');
+INSERT INTO `usuarios` VALUES (2,'Luciano SIlveira','luciano@email.com', '02445985412',1),(3,'Diego Brow','dimiiguel@gmail.com','84765367467',1),(4,'Alusca Tchuca','aluska@email.com','94876374654',1),(5,'Diego Miguel','dms@email.com','0000022222',1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 

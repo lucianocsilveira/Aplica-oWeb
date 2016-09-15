@@ -1,6 +1,0 @@
-C:\Users\Diego Miguel\Documents\DIEGO\Profissional\workspace\CIR\bin\CirWebApplication.dll.config
-C:\Users\Diego Miguel\Documents\DIEGO\Profissional\workspace\CIR\bin\CirWebApplication.dll
-C:\Users\Diego Miguel\Documents\DIEGO\Profissional\workspace\CIR\bin\CirWebApplication.pdb
-C:\Users\Diego Miguel\Documents\DIEGO\Profissional\workspace\CIR\obj\Debug\CirWebApplication.csprojResolveAssemblyReference.cache
-C:\Users\Diego Miguel\Documents\DIEGO\Profissional\workspace\CIR\obj\Debug\CirWebApplication.dll
-C:\Users\Diego Miguel\Documents\DIEGO\Profissional\workspace\CIR\obj\Debug\CirWebApplication.pdb
