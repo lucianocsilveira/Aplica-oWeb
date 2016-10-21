@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CIRApresentacao.Models.anuncio>
+
+@{
+    ViewBag.Title = "Anúncios";
+}
+
+<h2>Anúncios</h2>
+
+<p>
+    @Html.ActionLink("Criar Novo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tipo_Categoria)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Imagem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.categoria.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuario.Nome)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tipo_Categoria)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Imagem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.categoria.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuario.Nome)
+        </td>
+        <td>
+            @Html.ActionLink("Alterar", "Edit", new { id=item.Anuncio_id }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.Anuncio_id }) |
+            @Html.ActionLink("Apagar", "Delete", new { id=item.Anuncio_id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace CirWebApplication.Controllers
+namespace CIRApresentacao.Controllers
 {
     public class HomeController : Controller
     {

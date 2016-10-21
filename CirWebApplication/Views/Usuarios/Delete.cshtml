@@ -1,14 +1,14 @@
-﻿@model CirWebApplication.Models.usuario
+﻿@model CIRApresentacao.Models.usuario
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Apagar Usuário";
 }
 
-<h2>Delete</h2>
+<h2>Deletar Cadastro</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Você tem certeza que quer fazer esta operação?</h3>
 <div>
-    <h4>usuario</h4>
+    <h4>Usuario</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -20,19 +20,35 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.email)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.CPF_CNPJ)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.CPF_CNPJ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_Cadastro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_Cadastro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Senha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Senha)
         </dd>
 
         <dt>
@@ -50,7 +66,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Voltar", "Index")
         </div>
     }
 </div>

@@ -1,13 +1,13 @@
-﻿@model CirWebApplication.Models.usuario
+﻿@model CIRApresentacao.Models.usuario
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalhes";
 }
 
-<h2>Details</h2>
+<h2>Detalhes</h2>
 
 <div>
-    <h4>usuario</h4>
+    <h4>Usuario</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -19,19 +19,35 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.email)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.CPF_CNPJ)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.CPF_CNPJ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_Cadastro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_Cadastro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Senha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Senha)
         </dd>
 
         <dt>
@@ -45,6 +61,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Usuario_id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Alterar Dados", "Edit", new { id = Model.Usuario_id }) |
+    @Html.ActionLink("Voltar", "Index")
 </p>

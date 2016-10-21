@@ -9,9 +9,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using CirWebApplication.Models;
+using CIRApresentacao.Models;
 
-namespace CirWebApplication.Providers
+namespace CIRApresentacao.Providers
 {
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {

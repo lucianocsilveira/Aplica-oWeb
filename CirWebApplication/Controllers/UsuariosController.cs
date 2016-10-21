@@ -6,13 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using CirWebApplication.Models;
+using CIRApresentacao.Models;
 
-namespace CirWebApplication.Controllers
+namespace CIRApresentacao.Controllers
 {
     public class UsuariosController : Controller
     {
-        private cirEntities db = new cirEntities();
+        private CIRDataEntities db = new CIRDataEntities();
 
         // GET: Usuarios
         public ActionResult Index()
@@ -48,7 +48,7 @@ namespace CirWebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Usuario_id,Nome,email,CPF_CNPJ,Cidade_id")] usuario usuario)
+        public ActionResult Create([Bind(Include = "Usuario_id,Nome,CPF_CNPJ,Cidade_id,Data_Cadastro,Email,Senha")] usuario usuario)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace CirWebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Usuario_id,Nome,email,CPF_CNPJ,Cidade_id")] usuario usuario)
+        public ActionResult Edit([Bind(Include = "Usuario_id,Nome,CPF_CNPJ,Cidade_id,Data_Cadastro,Email,Senha")] usuario usuario)
         {
             if (ModelState.IsValid)
             {

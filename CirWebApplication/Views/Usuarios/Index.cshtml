@@ -1,13 +1,13 @@
-﻿@model IEnumerable<CirWebApplication.Models.usuario>
+﻿@model IEnumerable<CIRApresentacao.Models.usuario>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Usuários";
 }
 
-<h2>Index</h2>
+<h2>Usuários</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Novo Usuário", "Create")
 </p>
 <table class="table">
     <tr>
@@ -15,10 +15,16 @@
             @Html.DisplayNameFor(model => model.Nome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.email)
+            @Html.DisplayNameFor(model => model.CPF_CNPJ)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CPF_CNPJ)
+            @Html.DisplayNameFor(model => model.Data_Cadastro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Senha)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.cidade.UF)
@@ -32,18 +38,24 @@
             @Html.DisplayFor(modelItem => item.Nome)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.email)
+            @Html.DisplayFor(modelItem => item.CPF_CNPJ)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CPF_CNPJ)
+            @Html.DisplayFor(modelItem => item.Data_Cadastro)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Senha)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.cidade.UF)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Usuario_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Usuario_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Usuario_id })
+            @Html.ActionLink("Editar", "Edit", new { id=item.Usuario_id }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.Usuario_id }) |
+            @Html.ActionLink("Apagar", "Delete", new { id=item.Usuario_id })
         </td>
     </tr>
 }

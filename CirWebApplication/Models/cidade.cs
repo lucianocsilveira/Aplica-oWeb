@@ -7,12 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CirWebApplication.Models
+namespace CIRApresentacao.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class cidade
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +20,6 @@ namespace CirWebApplication.Models
             this.usuarios = new HashSet<usuario>();
         }
     
-        [Key]
         public int Cidade_id { get; set; }
         public string UF { get; set; }
         public string Cidade1 { get; set; }

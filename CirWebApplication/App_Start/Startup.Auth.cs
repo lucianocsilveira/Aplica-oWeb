@@ -8,10 +8,10 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using CirWebApplication.Providers;
-using CirWebApplication.Models;
+using CIRApresentacao.Providers;
+using CIRApresentacao.Models;
 
-namespace CirWebApplication
+namespace CIRApresentacao
 {
     public partial class Startup
     {

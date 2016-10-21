@@ -7,21 +7,35 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CirWebApplication.Models
+namespace CIRApresentacao.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class usuario
     {
-        [Key]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public usuario()
+        {
+            this.anuncios = new HashSet<anuncio>();
+            this.denuncias = new HashSet<denuncia>();
+            this.preferencias = new HashSet<preferencia>();
+        }
+    
         public int Usuario_id { get; set; }
         public string Nome { get; set; }
-        public string email { get; set; }
         public string CPF_CNPJ { get; set; }
         public int Cidade_id { get; set; }
+        public System.DateTime Data_Cadastro { get; set; }
+        public string Email { get; set; }
+        public string Senha { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<anuncio> anuncios { get; set; }
         public virtual cidade cidade { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<denuncia> denuncias { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<preferencia> preferencias { get; set; }
     }
 }

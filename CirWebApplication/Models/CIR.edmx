@@ -1,0 +1,473 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CIRDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="anuncio">
+          <Key>
+            <PropertyRef Name="Anuncio_id" />
+          </Key>
+          <Property Name="Anuncio_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Usuario_id" Type="int" Nullable="false" />
+          <Property Name="Data" Type="date" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Tipo_Categoria" Type="int" Nullable="false" />
+          <Property Name="Imagem" Type="text" Nullable="false" />
+          <Property Name="Categoria_Produto_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="categoria">
+          <Key>
+            <PropertyRef Name="Categoria_Produto_id" />
+          </Key>
+          <Property Name="Categoria_Produto_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cidades">
+          <Key>
+            <PropertyRef Name="Cidade_id" />
+          </Key>
+          <Property Name="Cidade_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UF" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Cidade" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="denuncias">
+          <Key>
+            <PropertyRef Name="Denuncia_id" />
+          </Key>
+          <Property Name="Denuncia_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Anuncio_id" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="text" Nullable="false" />
+          <Property Name="Data" Type="date" Nullable="false" />
+          <Property Name="Usuario_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="preferencias">
+          <Key>
+            <PropertyRef Name="preferencia_id" />
+          </Key>
+          <Property Name="preferencia_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="categoria_produto_id" Type="int" Nullable="false" />
+          <Property Name="usuario_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuarios">
+          <Key>
+            <PropertyRef Name="Usuario_id" />
+          </Key>
+          <Property Name="Usuario_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="CPF_CNPJ" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Cidade_id" Type="int" Nullable="false" />
+          <Property Name="Data_Cadastro" Type="date" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Senha" Type="varchar" MaxLength="16" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_anunciodenuncia">
+          <End Role="anuncio" Type="Self.anuncio" Multiplicity="1" />
+          <End Role="denuncias" Type="Self.denuncias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="anuncio">
+              <PropertyRef Name="Anuncio_id" />
+            </Principal>
+            <Dependent Role="denuncias">
+              <PropertyRef Name="Anuncio_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_categoria">
+          <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
+          <End Role="preferencias" Type="Self.preferencias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria">
+              <PropertyRef Name="Categoria_Produto_id" />
+            </Principal>
+            <Dependent Role="preferencias">
+              <PropertyRef Name="categoria_produto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_catprod">
+          <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
+          <End Role="anuncio" Type="Self.anuncio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria">
+              <PropertyRef Name="Categoria_Produto_id" />
+            </Principal>
+            <Dependent Role="anuncio">
+              <PropertyRef Name="Categoria_Produto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cidade">
+          <End Role="cidades" Type="Self.cidades" Multiplicity="1" />
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cidades">
+              <PropertyRef Name="Cidade_id" />
+            </Principal>
+            <Dependent Role="usuarios">
+              <PropertyRef Name="Cidade_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usr_anuncio">
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="1" />
+          <End Role="anuncio" Type="Self.anuncio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="Usuario_id" />
+            </Principal>
+            <Dependent Role="anuncio">
+              <PropertyRef Name="Usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usrdenuncia">
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="1" />
+          <End Role="denuncias" Type="Self.denuncias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="Usuario_id" />
+            </Principal>
+            <Dependent Role="denuncias">
+              <PropertyRef Name="Usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario">
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="1" />
+          <End Role="preferencias" Type="Self.preferencias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="Usuario_id" />
+            </Principal>
+            <Dependent Role="preferencias">
+              <PropertyRef Name="usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CIRDataModelStoreContainer">
+          <EntitySet Name="anuncio" EntityType="Self.anuncio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categoria" EntityType="Self.categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cidades" EntityType="Self.cidades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="denuncias" EntityType="Self.denuncias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="preferencias" EntityType="Self.preferencias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_anunciodenuncia" Association="Self.FK_anunciodenuncia">
+            <End Role="anuncio" EntitySet="anuncio" />
+            <End Role="denuncias" EntitySet="denuncias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_categoria" Association="Self.FK_categoria">
+            <End Role="categoria" EntitySet="categoria" />
+            <End Role="preferencias" EntitySet="preferencias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_catprod" Association="Self.FK_catprod">
+            <End Role="categoria" EntitySet="categoria" />
+            <End Role="anuncio" EntitySet="anuncio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cidade" Association="Self.FK_Cidade">
+            <End Role="cidades" EntitySet="cidades" />
+            <End Role="usuarios" EntitySet="usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usr_anuncio" Association="Self.FK_usr_anuncio">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="anuncio" EntitySet="anuncio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usrdenuncia" Association="Self.FK_usrdenuncia">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="denuncias" EntitySet="denuncias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario" Association="Self.FK_usuario">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="preferencias" EntitySet="preferencias" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CIRDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="anuncio">
+          <Key>
+            <PropertyRef Name="Anuncio_id" />
+          </Key>
+          <Property Name="Anuncio_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Usuario_id" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Descricao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tipo_Categoria" Type="Int32" Nullable="false" />
+          <Property Name="Imagem" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Categoria_Produto_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="denuncias" Relationship="Self.FK_anunciodenuncia" FromRole="anuncio" ToRole="denuncias" />
+          <NavigationProperty Name="categoria" Relationship="Self.FK_catprod" FromRole="anuncio" ToRole="categoria" />
+          <NavigationProperty Name="usuario" Relationship="Self.FK_usr_anuncio" FromRole="anuncio" ToRole="usuarios" />
+        </EntityType>
+        <EntityType Name="categoria">
+          <Key>
+            <PropertyRef Name="Categoria_Produto_id" />
+          </Key>
+          <Property Name="Categoria_Produto_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="anuncios" Relationship="Self.FK_catprod" FromRole="categoria" ToRole="anuncio" />
+          <NavigationProperty Name="preferencias" Relationship="Self.FK_categoria" FromRole="categoria" ToRole="preferencias" />
+        </EntityType>
+        <EntityType Name="cidade">
+          <Key>
+            <PropertyRef Name="Cidade_id" />
+          </Key>
+          <Property Name="Cidade_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UF" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cidade1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="usuarios" Relationship="Self.FK_Cidade" FromRole="cidades" ToRole="usuarios" />
+        </EntityType>
+        <EntityType Name="denuncia">
+          <Key>
+            <PropertyRef Name="Denuncia_id" />
+          </Key>
+          <Property Name="Denuncia_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Anuncio_id" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Usuario_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="anuncio" Relationship="Self.FK_anunciodenuncia" FromRole="denuncias" ToRole="anuncio" />
+          <NavigationProperty Name="usuario" Relationship="Self.FK_usrdenuncia" FromRole="denuncias" ToRole="usuarios" />
+        </EntityType>
+        <EntityType Name="preferencia">
+          <Key>
+            <PropertyRef Name="preferencia_id" />
+          </Key>
+          <Property Name="preferencia_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="categoria_produto_id" Type="Int32" Nullable="false" />
+          <Property Name="usuario_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="categoria" Relationship="Self.FK_categoria" FromRole="preferencias" ToRole="categoria" />
+          <NavigationProperty Name="usuario" Relationship="Self.FK_usuario" FromRole="preferencias" ToRole="usuarios" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="Usuario_id" />
+          </Key>
+          <Property Name="Usuario_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CPF_CNPJ" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cidade_id" Type="Int32" Nullable="false" />
+          <Property Name="Data_Cadastro" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Senha" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="anuncios" Relationship="Self.FK_usr_anuncio" FromRole="usuarios" ToRole="anuncio" />
+          <NavigationProperty Name="cidade" Relationship="Self.FK_Cidade" FromRole="usuarios" ToRole="cidades" />
+          <NavigationProperty Name="denuncias" Relationship="Self.FK_usrdenuncia" FromRole="usuarios" ToRole="denuncias" />
+          <NavigationProperty Name="preferencias" Relationship="Self.FK_usuario" FromRole="usuarios" ToRole="preferencias" />
+        </EntityType>
+        <Association Name="FK_anunciodenuncia">
+          <End Role="anuncio" Type="Self.anuncio" Multiplicity="1" />
+          <End Role="denuncias" Type="Self.denuncia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="anuncio">
+              <PropertyRef Name="Anuncio_id" />
+            </Principal>
+            <Dependent Role="denuncias">
+              <PropertyRef Name="Anuncio_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_catprod">
+          <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
+          <End Role="anuncio" Type="Self.anuncio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria">
+              <PropertyRef Name="Categoria_Produto_id" />
+            </Principal>
+            <Dependent Role="anuncio">
+              <PropertyRef Name="Categoria_Produto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usr_anuncio">
+          <End Role="usuarios" Type="Self.usuario" Multiplicity="1" />
+          <End Role="anuncio" Type="Self.anuncio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="Usuario_id" />
+            </Principal>
+            <Dependent Role="anuncio">
+              <PropertyRef Name="Usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_categoria">
+          <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
+          <End Role="preferencias" Type="Self.preferencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria">
+              <PropertyRef Name="Categoria_Produto_id" />
+            </Principal>
+            <Dependent Role="preferencias">
+              <PropertyRef Name="categoria_produto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cidade">
+          <End Role="cidades" Type="Self.cidade" Multiplicity="1" />
+          <End Role="usuarios" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cidades">
+              <PropertyRef Name="Cidade_id" />
+            </Principal>
+            <Dependent Role="usuarios">
+              <PropertyRef Name="Cidade_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usrdenuncia">
+          <End Role="usuarios" Type="Self.usuario" Multiplicity="1" />
+          <End Role="denuncias" Type="Self.denuncia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="Usuario_id" />
+            </Principal>
+            <Dependent Role="denuncias">
+              <PropertyRef Name="Usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario">
+          <End Role="usuarios" Type="Self.usuario" Multiplicity="1" />
+          <End Role="preferencias" Type="Self.preferencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="Usuario_id" />
+            </Principal>
+            <Dependent Role="preferencias">
+              <PropertyRef Name="usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CIRDataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="anuncios" EntityType="Self.anuncio" />
+          <EntitySet Name="categorias" EntityType="Self.categoria" />
+          <EntitySet Name="cidades" EntityType="Self.cidade" />
+          <EntitySet Name="denuncias" EntityType="Self.denuncia" />
+          <EntitySet Name="preferencias" EntityType="Self.preferencia" />
+          <EntitySet Name="usuarios" EntityType="Self.usuario" />
+          <AssociationSet Name="FK_anunciodenuncia" Association="Self.FK_anunciodenuncia">
+            <End Role="anuncio" EntitySet="anuncios" />
+            <End Role="denuncias" EntitySet="denuncias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_catprod" Association="Self.FK_catprod">
+            <End Role="categoria" EntitySet="categorias" />
+            <End Role="anuncio" EntitySet="anuncios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usr_anuncio" Association="Self.FK_usr_anuncio">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="anuncio" EntitySet="anuncios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_categoria" Association="Self.FK_categoria">
+            <End Role="categoria" EntitySet="categorias" />
+            <End Role="preferencias" EntitySet="preferencias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cidade" Association="Self.FK_Cidade">
+            <End Role="cidades" EntitySet="cidades" />
+            <End Role="usuarios" EntitySet="usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usrdenuncia" Association="Self.FK_usrdenuncia">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="denuncias" EntitySet="denuncias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario" Association="Self.FK_usuario">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="preferencias" EntitySet="preferencias" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CIRDataModelStoreContainer" CdmEntityContainer="CIRDataEntities">
+          <EntitySetMapping Name="anuncios">
+            <EntityTypeMapping TypeName="CIRDataModel.anuncio">
+              <MappingFragment StoreEntitySet="anuncio">
+                <ScalarProperty Name="Anuncio_id" ColumnName="Anuncio_id" />
+                <ScalarProperty Name="Usuario_id" ColumnName="Usuario_id" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Tipo_Categoria" ColumnName="Tipo_Categoria" />
+                <ScalarProperty Name="Imagem" ColumnName="Imagem" />
+                <ScalarProperty Name="Categoria_Produto_id" ColumnName="Categoria_Produto_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categorias">
+            <EntityTypeMapping TypeName="CIRDataModel.categoria">
+              <MappingFragment StoreEntitySet="categoria">
+                <ScalarProperty Name="Categoria_Produto_id" ColumnName="Categoria_Produto_id" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cidades">
+            <EntityTypeMapping TypeName="CIRDataModel.cidade">
+              <MappingFragment StoreEntitySet="cidades">
+                <ScalarProperty Name="Cidade_id" ColumnName="Cidade_id" />
+                <ScalarProperty Name="UF" ColumnName="UF" />
+                <ScalarProperty Name="Cidade1" ColumnName="Cidade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="denuncias">
+            <EntityTypeMapping TypeName="CIRDataModel.denuncia">
+              <MappingFragment StoreEntitySet="denuncias">
+                <ScalarProperty Name="Denuncia_id" ColumnName="Denuncia_id" />
+                <ScalarProperty Name="Anuncio_id" ColumnName="Anuncio_id" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Usuario_id" ColumnName="Usuario_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="preferencias">
+            <EntityTypeMapping TypeName="CIRDataModel.preferencia">
+              <MappingFragment StoreEntitySet="preferencias">
+                <ScalarProperty Name="preferencia_id" ColumnName="preferencia_id" />
+                <ScalarProperty Name="categoria_produto_id" ColumnName="categoria_produto_id" />
+                <ScalarProperty Name="usuario_id" ColumnName="usuario_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuarios">
+            <EntityTypeMapping TypeName="CIRDataModel.usuario">
+              <MappingFragment StoreEntitySet="usuarios">
+                <ScalarProperty Name="Usuario_id" ColumnName="Usuario_id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="CPF_CNPJ" ColumnName="CPF_CNPJ" />
+                <ScalarProperty Name="Cidade_id" ColumnName="Cidade_id" />
+                <ScalarProperty Name="Data_Cadastro" ColumnName="Data_Cadastro" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

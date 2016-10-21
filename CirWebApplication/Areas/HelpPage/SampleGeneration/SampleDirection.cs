@@ -1,4 +1,4 @@
-namespace CirWebApplication.Areas.HelpPage
+namespace CIRApresentacao.Areas.HelpPage
 {
     /// <summary>
     /// Indicates whether the sample is used for request or response

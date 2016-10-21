@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CirWebApplication.Models
+namespace CIRApresentacao.Models
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class cirEntities : DbContext
+    public partial class CIRDataEntities : DbContext
     {
-        public cirEntities()
-            : base("name=cirEntities")
+        public CIRDataEntities()
+            : base("name=CIRDataEntities")
         {
         }
     
@@ -25,7 +25,11 @@ namespace CirWebApplication.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<anuncio> anuncios { get; set; }
+        public virtual DbSet<categoria> categorias { get; set; }
         public virtual DbSet<cidade> cidades { get; set; }
+        public virtual DbSet<denuncia> denuncias { get; set; }
+        public virtual DbSet<preferencia> preferencias { get; set; }
         public virtual DbSet<usuario> usuarios { get; set; }
     }
 }

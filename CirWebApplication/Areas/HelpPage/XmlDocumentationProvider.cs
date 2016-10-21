@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using System.Xml.XPath;
-using CirWebApplication.Areas.HelpPage.ModelDescriptions;
+using CIRApresentacao.Areas.HelpPage.ModelDescriptions;
 
-namespace CirWebApplication.Areas.HelpPage
+namespace CIRApresentacao.Areas.HelpPage
 {
     /// <summary>
     /// A custom <see cref="IDocumentationProvider"/> that reads the API documentation from an XML documentation file.

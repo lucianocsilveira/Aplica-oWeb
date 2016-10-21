@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace CirWebApplication.Areas.HelpPage.ModelDescriptions
+namespace CIRApresentacao.Areas.HelpPage.ModelDescriptions
 {
     internal static class ModelNameHelper
     {

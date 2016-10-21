@@ -1,0 +1,50 @@
+﻿@model CIRApresentacao.Models.denuncia
+
+@{
+    ViewBag.Title = "Detalhes";
+}
+
+<h2>Detalhes</h2>
+
+<div>
+    <h4>Denuncia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.anuncio.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.anuncio.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuario.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuario.Nome)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Alterar", "Edit", new { id = Model.Denuncia_id }) |
+    @Html.ActionLink("Voltar", "Index")
+</p>

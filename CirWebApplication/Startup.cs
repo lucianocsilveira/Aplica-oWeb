@@ -4,9 +4,9 @@ using System.Linq;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(CirWebApplication.Startup))]
+[assembly: OwinStartup(typeof(CIRApresentacao.Startup))]
 
-namespace CirWebApplication
+namespace CIRApresentacao
 {
     public partial class Startup
     {

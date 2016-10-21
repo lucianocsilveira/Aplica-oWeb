@@ -1,0 +1,51 @@
+﻿@model IEnumerable<CIRApresentacao.Models.denuncia>
+
+@{
+    ViewBag.Title = "Denúncias";
+}
+
+<h2>Denúncias</h2>
+
+<p>
+    @Html.ActionLink("Nova Denúncia", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.anuncio.Descricao) do Anúncio
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuario.Nome)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.anuncio.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuario.Nome)
+        </td>
+        <td>
+            @Html.ActionLink("Alterar", "Edit", new { id=item.Denuncia_id }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.Denuncia_id }) |
+            @Html.ActionLink("Apagar", "Delete", new { id=item.Denuncia_id })
+        </td>
+    </tr>
+}
+
+</table>

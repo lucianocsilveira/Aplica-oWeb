@@ -11,10 +11,10 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
-using CirWebApplication.Areas.HelpPage.ModelDescriptions;
-using CirWebApplication.Areas.HelpPage.Models;
+using CIRApresentacao.Areas.HelpPage.ModelDescriptions;
+using CIRApresentacao.Areas.HelpPage.Models;
 
-namespace CirWebApplication.Areas.HelpPage
+namespace CIRApresentacao.Areas.HelpPage
 {
     public static class HelpPageConfigurationExtensions
     {
