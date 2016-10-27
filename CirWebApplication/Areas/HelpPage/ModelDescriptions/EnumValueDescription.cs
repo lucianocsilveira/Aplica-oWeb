@@ -1,4 +1,4 @@
-namespace CIRApresentacao.Areas.HelpPage.ModelDescriptions
+namespace CirWebApplication.Areas.HelpPage.ModelDescriptions
 {
     public class EnumValueDescription
     {

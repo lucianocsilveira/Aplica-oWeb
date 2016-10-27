@@ -1,6 +1,6 @@
 using System;
 
-namespace CIRApresentacao.Areas.HelpPage.ModelDescriptions
+namespace CirWebApplication.Areas.HelpPage.ModelDescriptions
 {
     /// <summary>
     /// Describes a type model.

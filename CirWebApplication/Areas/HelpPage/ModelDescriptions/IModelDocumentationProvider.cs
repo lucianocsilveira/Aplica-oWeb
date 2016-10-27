@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace CIRApresentacao.Areas.HelpPage.ModelDescriptions
+namespace CirWebApplication.Areas.HelpPage.ModelDescriptions
 {
     public interface IModelDocumentationProvider
     {

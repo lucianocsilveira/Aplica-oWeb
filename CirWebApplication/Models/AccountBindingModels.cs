@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace CIRApresentacao.Models
+namespace CirWebApplication.Models
 {
     // Models used as parameters to AccountController actions.
 

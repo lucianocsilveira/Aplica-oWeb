@@ -2,126 +2,104 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using CIRApresentacao.Models;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
+using CirWebApplication.Models;
 
-namespace CIRApresentacao.Controllers
+namespace CirWebApplication.Controllers
 {
-    public class AnunciosController : Controller
+    public class AnunciosController : ApiController
     {
-        private CIRDataEntities db = new CIRDataEntities();
+        private CIREntities db = new CIREntities();
 
-        // GET: Anuncios
-        public ActionResult Index()
+        // GET: api/Anuncios
+        public IQueryable<anuncio> Getanuncios()
         {
-            var anuncios = db.anuncios.Include(a => a.categoria).Include(a => a.usuario);
-            return View(anuncios.ToList());
+            return db.anuncios;
         }
 
-        // GET: Anuncios/Details/5
-        public ActionResult Details(int? id)
+        // GET: api/Anuncios/5
+        [ResponseType(typeof(anuncio))]
+        public async Task<IHttpActionResult> Getanuncio(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            anuncio anuncio = db.anuncios.Find(id);
+            anuncio anuncio = await db.anuncios.FindAsync(id);
             if (anuncio == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            return View(anuncio);
+
+            return Ok(anuncio);
         }
 
-        // GET: Anuncios/Create
-        public ActionResult Create()
+        // PUT: api/Anuncios/5
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putanuncio(int id, anuncio anuncio)
         {
-            ViewBag.Categoria_Produto_id = new SelectList(db.categorias, "Categoria_Produto_id", "Descricao");
-            ViewBag.Usuario_id = new SelectList(db.usuarios, "Usuario_id", "Nome");
-            return View();
-        }
-
-        // POST: Anuncios/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Anuncio_id,Usuario_id,Data,Descricao,Tipo_Categoria,Imagem,Categoria_Produto_id")] anuncio anuncio)
-        {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.anuncios.Add(anuncio);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return BadRequest(ModelState);
             }
 
-            ViewBag.Categoria_Produto_id = new SelectList(db.categorias, "Categoria_Produto_id", "Descricao", anuncio.Categoria_Produto_id);
-            ViewBag.Usuario_id = new SelectList(db.usuarios, "Usuario_id", "Nome", anuncio.Usuario_id);
-            return View(anuncio);
+            if (id != anuncio.Anuncio_id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(anuncio).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!anuncioExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: Anuncios/Edit/5
-        public ActionResult Edit(int? id)
+        // POST: api/Anuncios
+        [ResponseType(typeof(anuncio))]
+        public async Task<IHttpActionResult> Postanuncio(anuncio anuncio)
         {
-            if (id == null)
+            if (!ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest(ModelState);
             }
-            anuncio anuncio = db.anuncios.Find(id);
+
+            db.anuncios.Add(anuncio);
+            await db.SaveChangesAsync();
+
+            return CreatedAtRoute("DefaultApi", new { id = anuncio.Anuncio_id }, anuncio);
+        }
+
+        // DELETE: api/Anuncios/5
+        [ResponseType(typeof(anuncio))]
+        public async Task<IHttpActionResult> Deleteanuncio(int id)
+        {
+            anuncio anuncio = await db.anuncios.FindAsync(id);
             if (anuncio == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            ViewBag.Categoria_Produto_id = new SelectList(db.categorias, "Categoria_Produto_id", "Descricao", anuncio.Categoria_Produto_id);
-            ViewBag.Usuario_id = new SelectList(db.usuarios, "Usuario_id", "Nome", anuncio.Usuario_id);
-            return View(anuncio);
-        }
 
-        // POST: Anuncios/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Anuncio_id,Usuario_id,Data,Descricao,Tipo_Categoria,Imagem,Categoria_Produto_id")] anuncio anuncio)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(anuncio).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.Categoria_Produto_id = new SelectList(db.categorias, "Categoria_Produto_id", "Descricao", anuncio.Categoria_Produto_id);
-            ViewBag.Usuario_id = new SelectList(db.usuarios, "Usuario_id", "Nome", anuncio.Usuario_id);
-            return View(anuncio);
-        }
-
-        // GET: Anuncios/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            anuncio anuncio = db.anuncios.Find(id);
-            if (anuncio == null)
-            {
-                return HttpNotFound();
-            }
-            return View(anuncio);
-        }
-
-        // POST: Anuncios/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            anuncio anuncio = db.anuncios.Find(id);
             db.anuncios.Remove(anuncio);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            await db.SaveChangesAsync();
+
+            return Ok(anuncio);
         }
 
         protected override void Dispose(bool disposing)
@@ -131,6 +109,11 @@ namespace CIRApresentacao.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool anuncioExists(int id)
+        {
+            return db.anuncios.Count(e => e.Anuncio_id == id) > 0;
         }
     }
 }

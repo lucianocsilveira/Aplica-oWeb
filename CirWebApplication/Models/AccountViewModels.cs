@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CIRApresentacao.Models
+namespace CirWebApplication.Models
 {
     // Models returned by AccountController actions.
 

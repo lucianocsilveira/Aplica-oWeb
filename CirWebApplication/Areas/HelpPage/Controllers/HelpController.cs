@@ -1,10 +1,10 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using CIRApresentacao.Areas.HelpPage.ModelDescriptions;
-using CIRApresentacao.Areas.HelpPage.Models;
+using CirWebApplication.Areas.HelpPage.ModelDescriptions;
+using CirWebApplication.Areas.HelpPage.Models;
 
-namespace CIRApresentacao.Areas.HelpPage.Controllers
+namespace CirWebApplication.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.

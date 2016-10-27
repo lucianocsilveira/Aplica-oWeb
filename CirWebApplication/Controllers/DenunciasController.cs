@@ -2,126 +2,104 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using CIRApresentacao.Models;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
+using CirWebApplication.Models;
 
-namespace CIRApresentacao.Controllers
+namespace CirWebApplication.Controllers
 {
-    public class DenunciasController : Controller
+    public class DenunciasController : ApiController
     {
-        private CIRDataEntities db = new CIRDataEntities();
+        private CIREntities db = new CIREntities();
 
-        // GET: Dnuncias
-        public ActionResult Index()
+        // GET: api/Denuncias
+        public IQueryable<denuncia> Getdenuncias()
         {
-            var denuncias = db.denuncias.Include(d => d.anuncio).Include(d => d.usuario);
-            return View(denuncias.ToList());
+            return db.denuncias;
         }
 
-        // GET: Dnuncias/Details/5
-        public ActionResult Details(int? id)
+        // GET: api/Denuncias/5
+        [ResponseType(typeof(denuncia))]
+        public async Task<IHttpActionResult> Getdenuncia(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            denuncia denuncia = db.denuncias.Find(id);
+            denuncia denuncia = await db.denuncias.FindAsync(id);
             if (denuncia == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            return View(denuncia);
+
+            return Ok(denuncia);
         }
 
-        // GET: Dnuncias/Create
-        public ActionResult Create()
+        // PUT: api/Denuncias/5
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putdenuncia(int id, denuncia denuncia)
         {
-            ViewBag.Anuncio_id = new SelectList(db.anuncios, "Anuncio_id", "Descricao");
-            ViewBag.Usuario_id = new SelectList(db.usuarios, "Usuario_id", "Nome");
-            return View();
-        }
-
-        // POST: Dnuncias/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Denuncia_id,Anuncio_id,Descricao,Data,Usuario_id")] denuncia denuncia)
-        {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.denuncias.Add(denuncia);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return BadRequest(ModelState);
             }
 
-            ViewBag.Anuncio_id = new SelectList(db.anuncios, "Anuncio_id", "Descricao", denuncia.Anuncio_id);
-            ViewBag.Usuario_id = new SelectList(db.usuarios, "Usuario_id", "Nome", denuncia.Usuario_id);
-            return View(denuncia);
+            if (id != denuncia.Denuncia_id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(denuncia).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!denunciaExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: Dnuncias/Edit/5
-        public ActionResult Edit(int? id)
+        // POST: api/Denuncias
+        [ResponseType(typeof(denuncia))]
+        public async Task<IHttpActionResult> Postdenuncia(denuncia denuncia)
         {
-            if (id == null)
+            if (!ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest(ModelState);
             }
-            denuncia denuncia = db.denuncias.Find(id);
+
+            db.denuncias.Add(denuncia);
+            await db.SaveChangesAsync();
+
+            return CreatedAtRoute("DefaultApi", new { id = denuncia.Denuncia_id }, denuncia);
+        }
+
+        // DELETE: api/Denuncias/5
+        [ResponseType(typeof(denuncia))]
+        public async Task<IHttpActionResult> Deletedenuncia(int id)
+        {
+            denuncia denuncia = await db.denuncias.FindAsync(id);
             if (denuncia == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            ViewBag.Anuncio_id = new SelectList(db.anuncios, "Anuncio_id", "Descricao", denuncia.Anuncio_id);
-            ViewBag.Usuario_id = new SelectList(db.usuarios, "Usuario_id", "Nome", denuncia.Usuario_id);
-            return View(denuncia);
-        }
 
-        // POST: Dnuncias/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Denuncia_id,Anuncio_id,Descricao,Data,Usuario_id")] denuncia denuncia)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(denuncia).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.Anuncio_id = new SelectList(db.anuncios, "Anuncio_id", "Descricao", denuncia.Anuncio_id);
-            ViewBag.Usuario_id = new SelectList(db.usuarios, "Usuario_id", "Nome", denuncia.Usuario_id);
-            return View(denuncia);
-        }
-
-        // GET: Dnuncias/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            denuncia denuncia = db.denuncias.Find(id);
-            if (denuncia == null)
-            {
-                return HttpNotFound();
-            }
-            return View(denuncia);
-        }
-
-        // POST: Dnuncias/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            denuncia denuncia = db.denuncias.Find(id);
             db.denuncias.Remove(denuncia);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            await db.SaveChangesAsync();
+
+            return Ok(denuncia);
         }
 
         protected override void Dispose(bool disposing)
@@ -131,6 +109,11 @@ namespace CIRApresentacao.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool denunciaExists(int id)
+        {
+            return db.denuncias.Count(e => e.Denuncia_id == id) > 0;
         }
     }
 }

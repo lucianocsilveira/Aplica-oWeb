@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CIRApresentacao")]
+[assembly: AssemblyTitle("CirWebApplication")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CIRApresentacao")]
+[assembly: AssemblyProduct("CirWebApplication")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("091abf1e-9e08-47a3-9c4b-9855f854aee2")]
+[assembly: Guid("fae53611-3182-48cd-9f96-f17aed71b100")]
 
 // Version information for an assembly consists of the following four values:
 //

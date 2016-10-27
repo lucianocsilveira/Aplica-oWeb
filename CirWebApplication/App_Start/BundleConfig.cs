@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace CIRApresentacao
+namespace CirWebApplication
 {
     public class BundleConfig
     {

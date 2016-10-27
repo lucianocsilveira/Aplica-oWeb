@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace CIRApresentacao.Areas.HelpPage.ModelDescriptions
+namespace CirWebApplication.Areas.HelpPage.ModelDescriptions
 {
     public class ComplexTypeModelDescription : ModelDescription
     {

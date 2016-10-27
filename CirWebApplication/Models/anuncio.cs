@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CIRApresentacao.Models
+namespace CirWebApplication.Models
 {
     using System;
     using System.Collections.Generic;

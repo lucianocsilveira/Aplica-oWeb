@@ -3,7 +3,7 @@ using System.Text;
 using System.Web;
 using System.Web.Http.Description;
 
-namespace CIRApresentacao.Areas.HelpPage
+namespace CirWebApplication.Areas.HelpPage
 {
     public static class ApiDescriptionExtensions
     {

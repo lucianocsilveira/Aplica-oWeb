@@ -2,122 +2,104 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using CIRApresentacao.Models;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
+using CirWebApplication.Models;
 
-namespace CIRApresentacao.Controllers
+namespace CirWebApplication.Controllers
 {
-    public class UsuariosController : Controller
+    public class UsuariosController : ApiController
     {
-        private CIRDataEntities db = new CIRDataEntities();
+        private CIREntities db = new CIREntities();
 
-        // GET: Usuarios
-        public ActionResult Index()
+        // GET: api/Usuarios
+        public IQueryable<usuario> Getusuarios()
         {
-            var usuarios = db.usuarios.Include(u => u.cidade);
-            return View(usuarios.ToList());
+            return db.usuarios;
         }
 
-        // GET: Usuarios/Details/5
-        public ActionResult Details(int? id)
+        // GET: api/Usuarios/5
+        [ResponseType(typeof(usuario))]
+        public async Task<IHttpActionResult> Getusuario(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            usuario usuario = db.usuarios.Find(id);
+            usuario usuario = await db.usuarios.FindAsync(id);
             if (usuario == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            return View(usuario);
+
+            return Ok(usuario);
         }
 
-        // GET: Usuarios/Create
-        public ActionResult Create()
+        // PUT: api/Usuarios/5
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putusuario(int id, usuario usuario)
         {
-            ViewBag.Cidade_id = new SelectList(db.cidades, "Cidade_id", "UF");
-            return View();
-        }
-
-        // POST: Usuarios/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Usuario_id,Nome,CPF_CNPJ,Cidade_id,Data_Cadastro,Email,Senha")] usuario usuario)
-        {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.usuarios.Add(usuario);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return BadRequest(ModelState);
             }
 
-            ViewBag.Cidade_id = new SelectList(db.cidades, "Cidade_id", "UF", usuario.Cidade_id);
-            return View(usuario);
+            if (id != usuario.Usuario_id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(usuario).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!usuarioExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: Usuarios/Edit/5
-        public ActionResult Edit(int? id)
+        // POST: api/Usuarios
+        [ResponseType(typeof(usuario))]
+        public async Task<IHttpActionResult> Postusuario(usuario usuario)
         {
-            if (id == null)
+            if (!ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest(ModelState);
             }
-            usuario usuario = db.usuarios.Find(id);
+
+            db.usuarios.Add(usuario);
+            await db.SaveChangesAsync();
+
+            return CreatedAtRoute("DefaultApi", new { id = usuario.Usuario_id }, usuario);
+        }
+
+        // DELETE: api/Usuarios/5
+        [ResponseType(typeof(usuario))]
+        public async Task<IHttpActionResult> Deleteusuario(int id)
+        {
+            usuario usuario = await db.usuarios.FindAsync(id);
             if (usuario == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            ViewBag.Cidade_id = new SelectList(db.cidades, "Cidade_id", "UF", usuario.Cidade_id);
-            return View(usuario);
-        }
 
-        // POST: Usuarios/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Usuario_id,Nome,CPF_CNPJ,Cidade_id,Data_Cadastro,Email,Senha")] usuario usuario)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(usuario).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.Cidade_id = new SelectList(db.cidades, "Cidade_id", "UF", usuario.Cidade_id);
-            return View(usuario);
-        }
-
-        // GET: Usuarios/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            usuario usuario = db.usuarios.Find(id);
-            if (usuario == null)
-            {
-                return HttpNotFound();
-            }
-            return View(usuario);
-        }
-
-        // POST: Usuarios/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            usuario usuario = db.usuarios.Find(id);
             db.usuarios.Remove(usuario);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            await db.SaveChangesAsync();
+
+            return Ok(usuario);
         }
 
         protected override void Dispose(bool disposing)
@@ -127,6 +109,11 @@ namespace CIRApresentacao.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool usuarioExists(int id)
+        {
+            return db.usuarios.Count(e => e.Usuario_id == id) > 0;
         }
     }
 }
