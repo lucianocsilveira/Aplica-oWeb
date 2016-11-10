@@ -1,0 +1,7 @@
+.forms {
+    display: block;
+}
+.forms > form {
+    display: inline-block;
+    width: 500px;
+}

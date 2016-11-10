@@ -1,0 +1,36 @@
+.section_facebook {
+	text-align:center
+}
+.btnfb {
+	border:0;
+	border-radius:2px;
+	display:inline-block;
+	font-weight:bold;
+	padding:0;
+	text-align:center;
+	text-decoration:none;
+	vertical-align:bottom
+}
+.btnfb-medium {
+	font-size:1.333em;
+	line-height:2.222em;
+	padding-left:15px;
+	padding-right:15px
+}
+
+.btnfb-facebook {
+	background:#3a5c91 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAgBAMAAAALe/6GAAAAMFBMVEUAAABdeq9FXpBGZKD///9ee7BFXpBuh7pVcqzw8/pxirtbeLFmgbdferLBz+Wuu9kKmq9uAAAABHRSTlMA9vZXtTPrlAAAAFFJREFUGNNjQAAmASQOWwDxnPNTXC7AODxTXFw2wDh8LkgcTmQOi4vXqgYExwHExOSwl7i4l8OUhbgAAYxzBcpByKCaRhnHGYVDiWlkhigiSgB3nCJqcowD8wAAAABJRU5ErkJggg==') 15px center no-repeat;
+	color:#FFF;
+	padding-left:50px
+}
+.btnfb-facebook:hover {
+	background-color:#2a4877
+}
+
+.or-separator-text {
+	font-size:1.333em;
+	line-height:1.125em;
+	font-weight:bold;
+	color:#666;
+	margin:15px 0
+}

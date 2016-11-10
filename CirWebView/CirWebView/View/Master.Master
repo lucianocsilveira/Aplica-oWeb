@@ -1,0 +1,108 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Master.Master.cs" Inherits="CirWebView.MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Theme Region">
+   	<meta name="description" content="">
+
+    <title>CIR | Centro Integrado de Reciclagem</title>
+    
+    <link id="preset" rel="stylesheet" href="Content/css/presets/preset1.css">	
+    <link rel="stylesheet" href="../Content/css/main.css">  
+    <link rel="stylesheet" href="../Content/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../Content/css/icofont.css">
+    <link rel="stylesheet" href="../Content/css/owl.carousel.css">  
+    <link rel="stylesheet" href="../Content/css/slidr.css">     
+    <link rel="stylesheet" href="../Content/css/responsive.css">
+	<link rel="stylesheet" href="../Content/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="../Content/css/page_account.css">	
+
+	<!-- font -->
+	<link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500,700,300' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Signika+Negative:400,300,600,700' rel='stylesheet' type='text/css'>
+
+	<!-- icons -->
+	<link rel="icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.html">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="images/ico/apple-touch-icon-57-precomposed.png">
+
+    <!-- JS -->
+    <script src="../Scripts/js/jquery.min.js"></script>
+    <script src="../Scripts/jsjs/modernizr.min.js"></script>
+    <script src="../Scripts/jsjs/bootstrap.min.js"></script>
+	<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script src="../Scripts/jsjs/gmaps.min.js"></script>
+	<script src="../Scripts/jsjs/goMap.js"></script>
+	<script src="../Scripts/jsjs/map.js"></script>
+    <script src="../Scripts/jsjs/owl.carousel.min.js"></script>
+    <script src="../Scripts/jsjs/smoothscroll.min.js"></script>
+    <script src="../Scripts/jsjs/scrollup.min.js"></script>
+    <script src="../Scripts/jsjs/price-range.js"></script> 
+    <script src="../Scripts/jsjs/jquery.countdown.js"></script>    
+    <script src="../Scripts/jsjs/custom.js"></script>
+	<script src="../Scripts/jsjs/switcher.js"></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <header id="header" class="clearfix">
+		<!-- navbar -->
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<!-- navbar-header -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="~/Default.aspx"><img class="img-responsive" src="../images/logo.png" alt="Logo"/></a>
+				</div>
+				<!-- /navbar-header -->
+				
+				<div class="navbar-left">
+					<div class="collapse navbar-collapse" id="navbar-collapse">
+						<ul class="nav navbar-nav">
+							<li><a href="index.html">Home</a></li>
+							<li><a href="categories.html">Anúncios</a></li>
+							<li><a href="Chat.html">Chat</a></li> 
+							<li><a href="faq.html">Ajuda</a></li> 
+						</ul>
+					</div>
+				</div>
+				<!-- nav-right -->
+				<div class="nav-right">
+					<!-- sign-in -->					
+					<ul class="sign-in">
+						<li><a href="my-profile.html"/><i class="fa fa-user"></i></li>
+						<li><a href="View/signin.aspx">Login </a></li>
+					</ul><!-- sign-in -->					
+
+					<a href="ad-post.html" class="btn">Anuncie!!!</a>
+				</div>
+				<!-- nav-right -->
+			</div><!-- container -->
+		</nav><!-- navbar -->
+	</header><!-- header -->
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+
+    <div class="footer-bottom clearfix text-center">
+			<div class="container">
+				<p>Copyright &copy; 2016 </p>
+			</div>
+		</div><!-- footer-bottom -->
+
+		
+</body>
+</html>
