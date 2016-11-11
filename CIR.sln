@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CirWebApplication", "CirWeb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CirWebView", "CirWebView\CirWebView\CirWebView.csproj", "{AB53E5BF-75AC-4CC5-A28F-B165F0EA181E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "..\Teste_PaginaMestra\WebApplication1\WebApplication1\WebApplication1.csproj", "{F70D1DEA-CCAA-4001-8639-6E7965D803C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AB53E5BF-75AC-4CC5-A28F-B165F0EA181E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB53E5BF-75AC-4CC5-A28F-B165F0EA181E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB53E5BF-75AC-4CC5-A28F-B165F0EA181E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70D1DEA-CCAA-4001-8639-6E7965D803C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70D1DEA-CCAA-4001-8639-6E7965D803C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70D1DEA-CCAA-4001-8639-6E7965D803C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70D1DEA-CCAA-4001-8639-6E7965D803C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
